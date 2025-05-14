@@ -3,13 +3,14 @@
   padding:  1rem;
 
   .about-wrapper {
+    justify-content: center;
     display: flex;
     align-items: center;
     gap: 2rem;
     flex-wrap: wrap;
 
     img {
-      max-width: 400px;
+      max-width: 325px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
