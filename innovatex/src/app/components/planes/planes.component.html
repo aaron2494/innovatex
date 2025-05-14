@@ -1,0 +1,26 @@
+<div class="container py-5 text-center">
+  <h2 class="mb-4">Nuestros planes</h2>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let plan of planes">
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <h5 class="card-title">{{ plan.nombre }}</h5>
+          <p class="card-text">{{ plan.descripcion }}</p>
+          <p class="fw-bold">$ {{ plan.precio }}</p>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPago" (click)="prepararPago(plan)">Adquirir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="modalPagoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <h5 class="modal-title">Simulación de pago</h5>
+      <p><strong>Plan seleccionado:</strong> {{ planSeleccionado?.nombre }}</p>
+      <div id="wallet_container"></div>
+    </div>
+  </div>
+</div>

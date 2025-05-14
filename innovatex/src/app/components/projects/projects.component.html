@@ -1,0 +1,15 @@
+<section class="success-stories">
+  <h2>Casos de Éxito</h2>
+  <div class="story-grid">
+    <div class="story-card" *ngFor="let s of stories">
+      <div class="icon-circle">
+        <mat-icon>{{ s.icon }}</mat-icon>
+      </div>
+      <h3>{{ s.title }}</h3>
+      <p>{{ s.description }}</p>
+      <ul>
+        <li *ngFor="let r of s.results">✔ {{ r }}</li>
+      </ul>
+    </div>
+  </div>
+</section>

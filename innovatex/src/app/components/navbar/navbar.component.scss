@@ -1,0 +1,70 @@
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+  &.shrink {
+    height: 55px;
+    .logo {
+      font-size: 1.2rem;
+    }
+  }
+
+  .toolbar-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Merriweather', serif;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .desktop-menu a {
+    margin-left: 1rem;
+  }
+
+  .mobile-toggle {
+    display: none;
+  }
+}
+
+/* Drawer para móviles */
+.mobile-drawer {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+  }
+
+  .mobile-drawer {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    a {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+  }
+}

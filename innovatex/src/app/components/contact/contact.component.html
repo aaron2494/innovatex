@@ -1,0 +1,21 @@
+<section class="contact-section">
+  <h2>Contacto</h2>
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Mensaje</mat-label>
+      <textarea matInput formControlName="message" rows="5"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Enviar</button>
+  </form>
+</section>

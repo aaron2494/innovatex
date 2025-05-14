@@ -1,0 +1,18 @@
+<section class="services-section">
+  <h2>Nuestros Servicios</h2>
+  <div class="services-grid">
+    <div class="service-card" *ngFor="let s of services">
+      <div class="icon-container">
+        <mat-icon class="icon">{{ s.icon }}</mat-icon>
+      </div>
+      <div class="content">
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.description }}</p>
+        <ul>
+          <li *ngFor="let detail of s.details">✔ {{ detail }}</li>
+        </ul>
+        <button mat-stroked-button color="primary">Ver más</button>
+      </div>
+    </div>
+  </div>
+</section>

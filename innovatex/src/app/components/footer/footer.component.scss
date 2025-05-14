@@ -1,0 +1,19 @@
+.footer {
+  background-color: #1f1f1f;
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+
+  .social-icons {
+    margin-top: 1rem;
+    .icon {
+      margin: 0 0.5rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+      &:hover {
+        transform: rotate(180deg);
+        color: #00acc1;
+      }
+    }
+  }
+}
