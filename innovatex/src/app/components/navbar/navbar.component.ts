@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent  {
+  
  scrolled = false;
 
   @HostListener('window:scroll', [])

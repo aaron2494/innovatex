@@ -7,6 +7,8 @@ import { AboutComponent } from './components/about/about.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { TestimoniosComponent } from './components/testimonios/testimonios.component';
+import { ButtomComponent } from "./components/buttom/buttom.component";
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,9 @@ import { FooterComponent } from './components/footer/footer.component';
     ProjectsComponent,
     ContactComponent,
     FooterComponent,
-    PlanesComponent
+    PlanesComponent,
+    TestimoniosComponent,
+    ButtomComponent
 ],
   template: `
     <app-navbar></app-navbar>
@@ -28,6 +32,8 @@ import { FooterComponent } from './components/footer/footer.component';
     <app-about></app-about>
     <app-projects></app-projects>
     <app-planes/>
+    <app-testimonios/>
+    <app-buttom/>
     <app-contact></app-contact>
     <app-footer></app-footer>
   `,

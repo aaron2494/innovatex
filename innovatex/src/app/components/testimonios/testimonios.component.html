@@ -1,0 +1,14 @@
+<section class="bg-light py-5 text-center">
+  <h2 class="mb-4">Lo que dicen nuestros clientes</h2>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-4 mb-4" *ngFor="let testimonio of testimonios">
+        <div class="card p-3 h-100">
+          <img [src]="testimonio.foto" class="rounded-circle mx-auto" alt="Cliente" width="80">
+          <p class="mt-3">"{{ testimonio.mensaje }}"</p>
+          <h6 class="text-muted mt-auto">{{ testimonio.nombre }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
