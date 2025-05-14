@@ -16,6 +16,7 @@ export class PlanesComponent  implements AfterViewInit {
   }
   mp: any;
   planSeleccionado: any = null;
+  cargando = false;
 
 planes = [
   { 
@@ -43,19 +44,17 @@ planes = [
 
 prepararPago(plan: any) {
   this.planSeleccionado = plan;
-
+  this.cargando = true;
   const container = document.getElementById('wallet_container');
   if (container) {
     container.innerHTML = '';
+    
   }
-
-  // Verifica que el objeto plan tiene los datos correctos antes de enviarlo
-  console.log('Plan a enviar:', plan);
 
   this.http.post<any>('https://backend-mp-sage.vercel.app/api/crear-preferencia', { plan }).subscribe({
     next: (res) => {
       const preferenciaId = res.preferenceId;
-
+      this.cargando = false;
       this.mp.bricks().create('wallet', 'wallet_container', {
         initialization: {
           preferenceId: preferenciaId
@@ -68,16 +67,19 @@ prepararPago(plan: any) {
         callbacks: {
           onReady: () => {
             console.log('✅ Brick listo');
+            this.cargando = false; // Ocultar spinner cuando esté listo
           },
         
           onError: (error: any) => {
             console.error('❌ Error con Brick:', error);
+            this.cargando = false; // Ocultar spinner también en caso de error
           }
         }
       });
     },
     error: (err) => {
       console.error('❌ Error al obtener preferenceId:', err);
+      this.cargando = false; // Ocultar spinner también en caso de error
     }
   });
 }

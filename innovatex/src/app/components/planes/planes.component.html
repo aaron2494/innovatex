@@ -20,6 +20,11 @@
     <div class="modal-content p-4">
       <h5 class="modal-title">Simulación de pago</h5>
       <p><strong>Plan seleccionado:</strong> {{ planSeleccionado?.nombre }}</p>
+      <div *ngIf="cargando" class="d-flex justify-content-center my-3">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div>
       <div id="wallet_container"></div>
     </div>
   </div>
