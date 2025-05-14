@@ -52,7 +52,7 @@ prepararPago(plan: any) {
   // Verifica que el objeto plan tiene los datos correctos antes de enviarlo
   console.log('Plan a enviar:', plan);
 
-  this.http.post<any>('http://localhost:3000/api/crear-preferencia', { plan }).subscribe({
+  this.http.post<any>('https://backend-mp-sage.vercel.app/api/crear-preferencia', { plan }).subscribe({
     next: (res) => {
       const preferenciaId = res.preferenceId;
 
