@@ -16,7 +16,7 @@ export class DashboardComponent  implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>('https://backend-mp-sage.vercel.app/api/ventas').subscribe({
+    this.http.get<any[]>(' http://localhost:3000/api/ventas').subscribe({
       next: (data) => this.ventas = data,
       error: (err) => console.error('Error al cargar ventas', err)
     });

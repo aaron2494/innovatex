@@ -45,42 +45,49 @@ planes = [
 prepararPago(plan: any) {
   this.planSeleccionado = plan;
   this.cargando = true;
+
   const container = document.getElementById('wallet_container');
   if (container) {
     container.innerHTML = '';
-    
   }
 
-  this.http.post<any>('https://backend-mp-sage.vercel.app/api/crear-preferencia', { plan }).subscribe({
+  const origen = localStorage.getItem('usuario') || 'anonimo';
+
+  const preference = {
+  plan: plan,
+  origen: origen
+  };
+
+  this.http.post<any>('http://localhost:3000/api/crear-preferencia', preference).subscribe({
     next: (res) => {
       const preferenciaId = res.preferenceId;
-      this.cargando = false;
+
       this.mp.bricks().create('wallet', 'wallet_container', {
         initialization: {
           preferenceId: preferenciaId
         },
         customization: {
           texts: {
-            valueProp: 'smart_option',
-          },
+            valueProp: 'smart_option'
+          }
         },
         callbacks: {
           onReady: () => {
             console.log('✅ Brick listo');
-            this.cargando = false; // Ocultar spinner cuando esté listo
+            this.cargando = false;
           },
-        
           onError: (error: any) => {
             console.error('❌ Error con Brick:', error);
-            this.cargando = false; // Ocultar spinner también en caso de error
+            this.cargando = false;
           }
         }
       });
     },
     error: (err) => {
       console.error('❌ Error al obtener preferenceId:', err);
-      this.cargando = false; // Ocultar spinner también en caso de error
+      this.cargando = false;
     }
   });
 }
+
 }
