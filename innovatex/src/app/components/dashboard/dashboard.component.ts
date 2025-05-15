@@ -25,7 +25,7 @@ export class DashboardComponent  implements OnInit {
     this.cargando = true;
     this.error = '';
     
-    this.http.get<any[]>('http://localhost:3000/api/ventas').subscribe({
+    this.http.get<any[]>('https://backend-mp-sage.vercel.app/api/ventas').subscribe({
       next: (ventas) => {
         this.ventas = ventas;
         this.calcularTotalIngresos();

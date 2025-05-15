@@ -59,7 +59,7 @@ prepararPago(plan: any) {
   origen: origen
   };
 
-  this.http.post<any>('http://localhost:3000/api/crear-preferencia', preference).subscribe({
+  this.http.post<any>('https://backend-mp-sage.vercel.app/api/crear-preferencia', preference).subscribe({
     
     next: (res) => {
       this.cargando = false;
