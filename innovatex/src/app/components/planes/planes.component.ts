@@ -48,6 +48,7 @@ prepararPago(plan: any) {
 
   const container = document.getElementById('wallet_container');
   if (container) {
+    
     container.innerHTML = '';
   }
 
@@ -59,7 +60,9 @@ prepararPago(plan: any) {
   };
 
   this.http.post<any>('http://localhost:3000/api/crear-preferencia', preference).subscribe({
+    
     next: (res) => {
+      this.cargando = false;
       const preferenciaId = res.preferenceId;
 
       this.mp.bricks().create('wallet', 'wallet_container', {
@@ -71,6 +74,7 @@ prepararPago(plan: any) {
             valueProp: 'smart_option'
           }
         },
+        
         callbacks: {
           onReady: () => {
             console.log('✅ Brick listo');
