@@ -38,14 +38,26 @@ export class DashboardComponent  implements OnInit {
       }
     });
   }
+
    calcularTotalIngresos() {
     this.totalIngresos = this.ventas.reduce((total, venta) => total + venta.monto, 0);
   }
 
-  // Función para formatear la fecha
-  formatearFecha(fecha: string): string {
-    return new Date(fecha).toLocaleDateString('es-AR');
+  formatearFecha(fecha: string | null): string {
+  if (!fecha) return 'Fecha no disponible';
+
+  const fechaObj = new Date(fecha);
+  if (isNaN(fechaObj.getTime())) {
+    return 'Fecha inválida';
   }
+
+  return fechaObj.toLocaleDateString('es-AR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+  
+}
 
   // Función para formatear el monto
   formatearMonto(monto: number): string {

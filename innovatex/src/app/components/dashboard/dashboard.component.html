@@ -34,7 +34,9 @@
           <tr *ngFor="let venta of ventas">
             <td>{{ venta.id }}</td>
             <td>{{ formatearFecha(venta.fecha) }}</td>
-            <td>{{ venta.cliente || 'Anónimo' }}</td>
+            <td>  <a *ngIf="venta.cliente !== 'Anónimo'" [href]="'mailto:' + venta.cliente">
+    {{ venta.cliente }}
+  </a></td>
             <td>{{ venta.plan }}</td>
             <td>{{ formatearMonto(venta.monto) }}</td>
             <td>{{ venta.metodo }}</td>
