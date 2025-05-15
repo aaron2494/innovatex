@@ -22,22 +22,22 @@ planes = [
   { 
     nombre: 'Básico', 
     descripcion: 'Ideal para pequeñas y medianas empresas que buscan optimizar sus procesos de manera eficiente. Incluye herramientas esenciales para el manejo de tu negocio, con soporte técnico básico. Perfecto para quienes están comenzando a dar sus primeros pasos en el mundo digital.', 
-    precio: 4999 
+    precio: 8
   },
   { 
     nombre: 'Profesional', 
     descripcion: 'Solución avanzada para empresas que necesitan herramientas potentes para crecer y gestionar operaciones de mayor escala. Con acceso a funciones premium y soporte técnico prioritario, este plan está diseñado para optimizar la productividad y ofrecer soluciones personalizadas.', 
-    precio: 11999 
+    precio: 10 
   },
   { 
     nombre: 'Premium', 
     descripcion: 'Automatización total para empresas grandes y proyectos ambiciosos. Incluye todas las funcionalidades del plan Profesional y herramientas avanzadas de análisis, seguridad y gestión. Acceso exclusivo a soporte personalizado 24/7, optimización de procesos a medida y características avanzadas para maximizar la eficiencia.', 
-    precio: 24999 
+    precio: 12
   }
 ];
 
   ngAfterViewInit(): void {
-    this.mp = new MercadoPago('TEST-de2444b5-8024-4a7d-8db5-5d824676a5ed', {
+    this.mp = new MercadoPago('APP_USR-b90e2b2a-5f94-4cab-bbc1-2b894b993ebe', {
       locale: 'es-AR'
     });
   }
