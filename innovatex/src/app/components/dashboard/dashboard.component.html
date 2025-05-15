@@ -1,0 +1,25 @@
+<div class="container py-5">
+  <h2 class="mb-4">Ventas realizadas</h2>
+  <table class="table table-dark table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Plan</th>
+        <th>Monto</th>
+        <th>Método</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let venta of ventas">
+        <td>{{ venta.id }}</td>
+        <td>{{ venta.fecha | date:'short' }}</td>
+        <td>{{ venta.plan }}</td>
+        <td>$ {{ venta.monto }}</td>
+        <td>{{ venta.metodo }}</td>
+        <td>{{ venta.estado }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

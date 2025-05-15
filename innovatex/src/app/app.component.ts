@@ -9,6 +9,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { TestimoniosComponent } from './components/testimonios/testimonios.component';
 import { ButtomComponent } from "./components/buttom/buttom.component";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ import { ButtomComponent } from "./components/buttom/buttom.component";
     FooterComponent,
     PlanesComponent,
     TestimoniosComponent,
-    ButtomComponent
+    ButtomComponent,
+    DashboardComponent
 ],
   template: `
     <app-navbar></app-navbar>
@@ -32,6 +34,7 @@ import { ButtomComponent } from "./components/buttom/buttom.component";
     <app-about></app-about>
     <app-projects></app-projects>
     <app-planes/>
+    <app-dashboard/>
     <app-testimonios/>
     <app-buttom/>
     <app-contact></app-contact>
