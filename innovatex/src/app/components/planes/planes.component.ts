@@ -22,17 +22,17 @@ planes = [
   { 
     nombre: 'Básico', 
     descripcion: 'Ideal para pequeñas y medianas empresas que buscan optimizar sus procesos de manera eficiente. Incluye herramientas esenciales para el manejo de tu negocio, con soporte técnico básico. Perfecto para quienes están comenzando a dar sus primeros pasos en el mundo digital.', 
-    precio: 8
+    precio: 1
   },
   { 
     nombre: 'Profesional', 
     descripcion: 'Solución avanzada para empresas que necesitan herramientas potentes para crecer y gestionar operaciones de mayor escala. Con acceso a funciones premium y soporte técnico prioritario, este plan está diseñado para optimizar la productividad y ofrecer soluciones personalizadas.', 
-    precio: 10 
+    precio: 2 
   },
   { 
     nombre: 'Premium', 
-    descripcion: 'Automatización total para empresas grandes y proyectos ambiciosos. Incluye todas las funcionalidades del plan Profesional y herramientas avanzadas de análisis, seguridad y gestión. Acceso exclusivo a soporte personalizado 24/7, optimización de procesos a medida y características avanzadas para maximizar la eficiencia.', 
-    precio: 12
+    descripcion: 'Automatización total para empresas grandes y proyectos ambiciosos. Incluye las funcionalidades del plan Profesional y herramientas avanzadas de análisis, seguridad y gestión. Acceso a soporte personalizado 24/7, procesos a medida y características avanzadas para maximizar la eficiencia.', 
+    precio: 3
   }
 ];
 
