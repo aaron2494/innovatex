@@ -10,11 +10,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TestimoniosComponent } from './components/testimonios/testimonios.component';
 import { ButtomComponent } from "./components/buttom/buttom.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { PagoExitosoComponent } from "./components/pago-exitoso/pago-exitoso.component";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
+  imports: [RouterOutlet,
     NavbarComponent,
     HeroComponent,
     ServicesComponent,
@@ -25,7 +27,8 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
     PlanesComponent,
     TestimoniosComponent,
     ButtomComponent,
-    DashboardComponent
+    DashboardComponent,
+
 ],
   template: `
     <app-navbar></app-navbar>
@@ -39,6 +42,7 @@ import { DashboardComponent } from "./components/dashboard/dashboard.component";
     <app-buttom/>
     <app-contact></app-contact>
     <app-footer></app-footer>
+    <router-outlet/>
   `,
 })
 export class AppComponent {}

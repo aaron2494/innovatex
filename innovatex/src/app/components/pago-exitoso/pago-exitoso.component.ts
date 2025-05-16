@@ -10,10 +10,11 @@ import Swal from 'sweetalert2';
 })
 export class PagoExitosoComponent implements OnInit {
   ngOnInit() {
+    console.log('PagoExitosoComponent cargado');
     Swal.fire({
       icon: 'success',
       title: '¡Pago realizado con éxito!',
-      text: 'Gracias por tu compra. Te hemos enviado un correo con los detalles.',
+      text: 'Gracias por tu compra.te enviaremos un correo con los detalles.',
       confirmButtonText: 'Aceptar',
       timer: 6000,
       timerProgressBar: true
