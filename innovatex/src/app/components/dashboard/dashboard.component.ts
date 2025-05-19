@@ -29,7 +29,7 @@ import {
         margin: '*',
       })),
       transition('oculto <=> visible', [
-        animate('400ms ease')
+        animate('500ms ease-in-out')
       ])
     ])
   ],
@@ -37,7 +37,7 @@ import {
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent  implements OnInit {
-  mostrarDashboard = true;
+  mostrarDashboard = false;
 
    ventas: any[] = [];
   cargando = false;
