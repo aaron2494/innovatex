@@ -10,8 +10,7 @@
   }
 
   .story-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
     gap: 2rem;
     justify-items: center;
   }
@@ -69,5 +68,19 @@
         color: #444;
       }
     }
+    
   }
+}
+@media (max-width: 768px) { 
+.success-stories{
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+  }
+
+
+}
+  
 }

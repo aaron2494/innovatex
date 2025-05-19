@@ -1,4 +1,24 @@
+<div class="grafico-container">
+  <div class="grafico-pastel">
+    <canvas baseChart
+      [data]="chartData"
+      [type]="'pie'"
+      [options]="chartOptions">
+    </canvas>
+  </div>
+  <div class="grafico-descripcion">
+    <h3>📊 Distribución de planes contratados</h3>
+    <p>
+      Este gráfico de torta refleja el porcentaje de clientes que han adquirido cada uno de nuestros planes: <strong>Básico</strong>, <strong>Profesional</strong> y <strong>Premium</strong>.
+    </p>
+    <p>
+      Nos permite visualizar qué soluciones están siendo más demandadas, ayudándonos a enfocar nuestras estrategias y seguir innovando en función de las necesidades de nuestros clientes.
+    </p>
+  </div>
+</div>
+
 <div class="container mt-4">
+
   <h2 class="mb-4">Dashboard de Pagos</h2>
   
   <div *ngIf="cargando" class="text-center">
