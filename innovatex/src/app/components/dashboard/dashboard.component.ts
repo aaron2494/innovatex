@@ -37,6 +37,11 @@ import {
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent  implements OnInit {
+
+  // Al inicio de tu clase
+paginaActual = 1;
+itemsPorPagina = 5;
+
   mostrarDashboard = false;
 
    ventas: any[] = [];
@@ -75,7 +80,7 @@ export class DashboardComponent  implements OnInit {
     
     this.http.get<any[]>('https://backend-mp-sage.vercel.app/api/ventas').subscribe({
       next: (ventas) => {
-        this.ventas = ventas;
+        this.ventas = ventas.reverse();
         this.calcularTotalIngresos();
         this.generarDatosGrafico();
         this.cargando = false;
@@ -87,7 +92,24 @@ export class DashboardComponent  implements OnInit {
       }
     });
   }
+get ventasPaginadas(): any[] {
+  const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+  const fin = inicio + this.itemsPorPagina;
+  return this.ventas.slice(inicio, fin);
+}
+  totalPaginas(): number {
+    return Math.ceil(this.ventas.length / this.itemsPorPagina);
+  }
 
+  totalPaginasArray(): number[] {
+    return Array.from({ length: this.totalPaginas() }, (_, i) => i + 1);
+  }
+
+  cambiarPagina(pagina: number) {
+    if (pagina >= 1 && pagina <= this.totalPaginas()) {
+      this.paginaActual = pagina;
+    }
+  }
    calcularTotalIngresos() {
     this.totalIngresos = this.ventas.reduce((total, venta) => total + venta.monto, 0);
   }
