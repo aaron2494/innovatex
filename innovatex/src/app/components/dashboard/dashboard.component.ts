@@ -3,15 +3,42 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {  ChartData, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/animations';
 @Component({
   selector: 'app-dashboard',
   imports: [NgFor,CommonModule,BaseChartDirective],
   standalone:true,
+  animations:[
+    trigger('expansion', [
+      state('oculto', style({
+        height: '0',
+        opacity: 0,
+        padding: '0',
+        margin: '0',
+      })),
+      state('visible', style({
+        height: '*',
+        opacity: 1,
+        padding: '*',
+        margin: '*',
+      })),
+      transition('oculto <=> visible', [
+        animate('400ms ease')
+      ])
+    ])
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent  implements OnInit {
+  mostrarDashboard = true;
+
    ventas: any[] = [];
   cargando = false;
   error = '';

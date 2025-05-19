@@ -22,7 +22,6 @@ import { RouterOutlet } from '@angular/router';
     ServicesComponent,
     AboutComponent,
     ProjectsComponent,
-    ContactComponent,
     FooterComponent,
     PlanesComponent,
     TestimoniosComponent,
@@ -40,7 +39,6 @@ import { RouterOutlet } from '@angular/router';
     <app-dashboard/>
     <app-testimonios/>
     <app-buttom/>
-    <app-contact></app-contact>
     <app-footer></app-footer>
     <router-outlet/>
   `,
