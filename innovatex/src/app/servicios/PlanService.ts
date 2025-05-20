@@ -22,7 +22,9 @@ export class PlanService {
       tap(plan => this._planActivo.next(plan))
     );
   }
-
+actualizarPlan(plan: string): void {
+  this._planActivo.next(plan.toLowerCase());
+}
   registrarPlan(email: string, plan: string) {
     return this.http.post('https://backend-mp-sage.vercel.app/api/registrar-plan', {email, plan}).pipe(
       tap(() => this._planActivo.next(plan)),

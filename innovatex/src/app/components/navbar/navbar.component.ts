@@ -51,11 +51,14 @@ export class NavbarComponent implements OnDestroy {
   }
 
   logout() {
-    this.isLoggingOut = true;
-    this.authService.logout().subscribe({
-      next: () => this.isLoggingOut = false,
-      error: () => this.isLoggingOut = false
-    });
+ this.isLoggingOut = true;
+  this.authService.logout().subscribe({
+    next: () => {
+      this.isLoggingOut = false;
+      window.location.reload(); // Forzar recarga completa
+    },
+    error: () => this.isLoggingOut = false
+  });
   }
 
   ngOnDestroy() {

@@ -71,6 +71,7 @@ prepararPago(plan: any) {
       text: 'Por favor inicia sesión para adquirir un plan.',
       confirmButtonText: 'Entendido'
     });
+    localStorage.removeItem('usuario');
     return;
   }
 
