@@ -10,7 +10,7 @@ export const planGuard: CanActivateFn = (route, state) => {
   const expectedPlan = route.routeConfig?.path?.split('/')[1]; // 'planes/basico' → 'basico'
 
   return new Promise<boolean>((resolve) => {
-    planService.planActivo.subscribe((plan) => {
+    planService.planActivo$.subscribe((plan) => {
       const userPlan = plan?.toLowerCase();
       const expected = route.routeConfig?.path?.split('/')[1]; // e.g., 'basico'
 
