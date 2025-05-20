@@ -11,12 +11,24 @@ declare var MercadoPago: any;
   styleUrl: './planes.component.scss',
   standalone:true,
 })
+
 export class PlanesComponent  implements AfterViewInit {
+  
   constructor(private http: HttpClient){
   }
+  
+
+    usuarioGoogleId: string = '';
+  email: string = '';
   mp: any;
   planSeleccionado: any = null;
   cargando = false;
+
+  ngOnInit() {
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    this.usuarioGoogleId = usuario.sub || ''; // o la clave correcta
+    this.email = usuario.email || '';
+  }
 
 planes = [
   { 
@@ -37,7 +49,7 @@ planes = [
 ];
 
   ngAfterViewInit(): void {
-    this.mp = new MercadoPago('APP_USR-b90e2b2a-5f94-4cab-bbc1-2b894b993ebe', {
+    this.mp = new MercadoPago('APP_USR-2d076423-1a9e-4bb6-852d-b43808b975d2', {
       locale: 'es-AR'
     });
   }
@@ -48,19 +60,17 @@ prepararPago(plan: any) {
 
   const container = document.getElementById('wallet_container');
   if (container) {
-    
     container.innerHTML = '';
   }
 
   const origen = localStorage.getItem('usuario') || 'anonimo';
 
   const preference = {
-  plan: plan,
-  origen: origen
+    plan: plan,
+    origen: origen
   };
 
   this.http.post<any>('https://backend-mp-sage.vercel.app/api/crear-preferencia', preference).subscribe({
-    
     next: (res) => {
       this.cargando = false;
       const preferenciaId = res.preferenceId;
@@ -74,7 +84,6 @@ prepararPago(plan: any) {
             valueProp: 'smart_option'
           }
         },
-        
         callbacks: {
           onReady: () => {
             console.log('✅ Brick listo');
@@ -83,6 +92,23 @@ prepararPago(plan: any) {
           onError: (error: any) => {
             console.error('❌ Error con Brick:', error);
             this.cargando = false;
+          },
+          // 🔽 Agregás tu callback para guardar la compra
+          onSubmit: async () => {
+            const compra = {
+              userId: this.usuarioGoogleId,
+              email: this.email,
+              plan: plan.nombre
+            };
+
+            this.http.post('https://backend-mp-sage.vercel.app/api/guardar-compra', compra).subscribe({
+              next: (res) => {
+                console.log('✅ Compra guardada correctamente');
+              },
+              error: (err) => {
+                console.error('❌ Error al guardar la compra:', err);
+              }
+            });
           }
         }
       });

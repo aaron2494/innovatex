@@ -1,20 +1,47 @@
-
 <nav class="navbar navbar-expand-lg fixed-top navbar-white bg-white shadow-sm">
   <div class="container-fluid">
-    
     <a class="navbar-brand" href="#">
-      <img src="data:image/svg+xml;utf8,%3Csvg%20width%3D%22180%22%20height%3D%2250%22%20viewBox%3D%220%200%20400%2080%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%3Cg%20fill%3D%22%231976d2%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M30%2010%20L35%2025%20L25%2025%20Z%22%3E%3C%2Fpath%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%228%22%20fill%3D%22%230d47a1%22%3E%3C%2Fcircle%3E%0A%20%20%20%20%3Cpath%20d%3D%22M20%2040%20h20%20v10%20h-20%20Z%22%3E%3C%2Fpath%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Ctext%20x%3D%2260%22%20y%3D%2245%22%20font-family%3D%22Merriweather%2C%20serif%22%20font-size%3D%2230%22%20fill%3D%22%230d47a1%22%3EInnovaTech%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%2260%22%20y%3D%2270%22%20font-family%3D%22Arial%22%20font-size%3D%2214%22%20fill%3D%22%231976d2%22%3ESoluciones%20en%20Automatizaci%C3%B3n%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A" alt="Logo" width="230" height="50" class="d-inline-block align-text-top">
+      <!-- Logo como está -->
+      <img
+        src="data:image/svg+xml;utf8,%3Csvg%20width%3D%22180%22%20height%3D%2250%22%20viewBox%3D%220%200%20400%2080%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%3Cg%20fill%3D%22%231976d2%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M30%2010%20L35%2025%20L25%2025%20Z%22%3E%3C%2Fpath%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%228%22%20fill%3D%22%230d47a1%22%3E%3C%2Fcircle%3E%0A%20%20%20%20%3Cpath%20d%3D%22M20%2040%20h20%20v10%20h-20%20Z%22%3E%3C%2Fpath%3E%0A%20%20%3C%2Fg%3E%0A%20%20%3Ctext%20x%3D%2260%22%20y%3D%2245%22%20font-family%3D%22Merriweather%2C%20serif%22%20font-size%3D%2230%22%20fill%3D%22%230d47a1%22%3EInnovaTech%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%2260%22%20y%3D%2270%22%20font-family%3D%22Arial%22%20font-size%3D%2214%22%20fill%3D%22%231976d2%22%3ESoluciones%20en%20Automatizaci%C3%B3n%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A"
+        alt="Logo"
+        width="230"
+        height="50"
+        class="d-inline-block align-text-top"
+      />
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
-        <li class="nav-item"><a class="nav-link" href="#casos">Casos de Éxito</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        <li class="nav-item" *ngIf="planUsuario">
+          <a [routerLink]="planUsuario" class="nav-link">Mi Plan</a>
+        </li>
+        <li class="nav-item ms-3 d-flex align-items-center">
+          <ng-container *ngIf="user; else loginBtn">
+            <span class="me-2 text-muted small">{{
+              user.displayName || user.email
+            }}</span>
+            <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+              Salir
+            </button>
+          </ng-container>
+          <ng-template #loginBtn>
+            <button class="btn btn-outline-primary btn-sm" (click)="login()">
+              Login con Google
+            </button>
+          </ng-template>
+        </li>
       </ul>
     </div>
   </div>
