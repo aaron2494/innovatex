@@ -1,10 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut, User, onAuthStateChanged } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { 
+  Auth, 
+  signInWithPopup, 
+  GoogleAuthProvider, 
+  signOut, 
+  User, 
+  onAuthStateChanged,
+  AuthError 
+} from '@angular/fire/auth';
+import { from, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private auth: Auth) {}
+   private _user = new BehaviorSubject<User | null>(null);
+  user$ = this._user.asObservable();
+
+  constructor(private auth: Auth) {
+    this.setupAuthStateListener();
+  }
 
   loginWithGoogle(): Observable<User> {
     const provider = new GoogleAuthProvider();
@@ -15,9 +28,9 @@ export class AuthService {
     return from(signOut(this.auth));
   }
 
-  authState(): Observable<User | null> {
-    return new Observable((observer) => {
-      return onAuthStateChanged(this.auth, observer);
+  private setupAuthStateListener(): void {
+    onAuthStateChanged(this.auth, (user) => {
+      this._user.next(user);
     });
   }
 }
