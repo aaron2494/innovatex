@@ -19,12 +19,25 @@ export class AuthService {
     this.setupAuthStateListener();
   }
 
-  loginWithGoogle(): Observable<User> {
-    const provider = new GoogleAuthProvider();
-    return from(signInWithPopup(this.auth, provider).then(result => result.user));
-  }
+ loginWithGoogle(): Observable<User> {
+  const provider = new GoogleAuthProvider();
+  return from(
+    signInWithPopup(this.auth, provider).then(result => {
+      const user = result.user;
+
+      // 👉 Guardamos en localStorage
+      localStorage.setItem('usuario', JSON.stringify({
+        sub: user.uid,
+        email: user.email
+      }));
+
+      return user;
+    })
+  );
+}
 
   logout(): Observable<void> {
+    localStorage.removeItem('usuario'); // 👈 importante
     return from(signOut(this.auth));
   }
 

@@ -3,6 +3,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 declare var MercadoPago: any;
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-planes',
@@ -25,7 +26,13 @@ export class PlanesComponent  implements AfterViewInit {
   cargando = false;
 
   ngOnInit() {
-    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    
+  const usuarioStr = (localStorage.getItem('usuario') || '{}');
+  console.log('👤 Usuario en localStorage:', usuarioStr);
+  const usuario = JSON.parse(usuarioStr || '{}');
+  this.usuarioGoogleId = usuario.sub || '';
+  this.email = usuario.email || '';
+  console.log('📧 Email cargado:', this.email);
     this.usuarioGoogleId = usuario.sub || ''; // o la clave correcta
     this.email = usuario.email || '';
   }
@@ -55,6 +62,18 @@ planes = [
   }
 
 prepararPago(plan: any) {
+    const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
+
+  if (!usuario || !usuario.sub || !usuario.email) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Debes iniciar sesión',
+      text: 'Por favor inicia sesión para adquirir un plan.',
+      confirmButtonText: 'Entendido'
+    });
+    return;
+  }
+
   this.planSeleccionado = plan;
   this.cargando = true;
 
