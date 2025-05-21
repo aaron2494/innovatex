@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 declare var MercadoPago: any;
 import Swal from 'sweetalert2';
+import { AuthService } from '../../servicios/AuthServices';
 
 @Component({
   selector: 'app-planes',
@@ -14,30 +15,7 @@ import Swal from 'sweetalert2';
 })
 
 export class PlanesComponent  implements AfterViewInit {
-  
-  constructor(private http: HttpClient){
-  }
-  
-
-    usuarioGoogleId: string = '';
-  email: string = '';
-  mp: any;
-  planSeleccionado: any = null;
-  cargando = false;
-
-  ngOnInit() {
-    
-  const usuarioStr = (localStorage.getItem('usuario') || '{}');
-  console.log('👤 Usuario en localStorage:', usuarioStr);
-  const usuario = JSON.parse(usuarioStr || '{}');
-  this.usuarioGoogleId = usuario.sub || '';
-  this.email = usuario.email || '';
-  console.log('📧 Email cargado:', this.email);
-    this.usuarioGoogleId = usuario.sub || ''; // o la clave correcta
-    this.email = usuario.email || '';
-  }
-
-planes = [
+  planes = [
   { 
     nombre: 'Básico', 
     descripcion: 'Ideal para pequeñas y medianas empresas que esten en busca de optimizar sus procesos de manera más eficiente. Incluye herramientas esenciales para el manejo de tu negocio, con soporte técnico básico pero eficiente. Perfecto para quienes están comenzando a dar sus primeros pasos en el mundo digital.', 
@@ -54,6 +32,30 @@ planes = [
     precio: 3
   }
 ];
+  constructor(private auth: AuthService,private http: HttpClient){
+  }
+  
+
+ usuarioGoogleId: string = '';
+  email: string = '';
+  mp: any;
+  planSeleccionado: any = null;
+  cargando = false;
+
+  ngOnInit() {
+    
+   this.auth.user$.subscribe(user => {
+    if (user) {
+      this.usuarioGoogleId = user.uid;
+      this.email = user.email ?? '';
+      console.log('✅ Usuario cargado desde AuthService:', this.email);
+    } else {
+      console.log('⚠️ Usuario no logueado');
+    }
+  });
+  }
+
+
 
   ngAfterViewInit(): void {
     this.mp = new MercadoPago('APP_USR-2d076423-1a9e-4bb6-852d-b43808b975d2', {
