@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 declare var MercadoPago: any;
 import Swal from 'sweetalert2';
 import { AuthService } from '../../servicios/AuthServices';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-planes',
@@ -63,83 +64,45 @@ export class PlanesComponent  implements AfterViewInit {
     });
   }
 
-prepararPago(plan: any) {
-    const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
-
-  if (!usuario || !usuario.sub || !usuario.email) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Debes iniciar sesión',
-      text: 'Por favor inicia sesión para adquirir un plan.',
-      confirmButtonText: 'Entendido'
-    });
-    localStorage.removeItem('usuario');
+async prepararPago(plan: any): Promise<void> {
+  if (!this.email) {
+    await Swal.fire('Error', 'Debes iniciar sesión primero', 'warning');
     return;
   }
 
-  this.planSeleccionado = plan;
   this.cargando = true;
-
-  const container = document.getElementById('wallet_container');
-  if (container) {
-    container.innerHTML = '';
-  }
-
-  const origen = localStorage.getItem('usuario') || 'anonimo';
-
-  const preference = {
-    plan: plan,
-    origen: origen
-  };
-
-  this.http.post<any>('http://localhost:3000/api/crear-preferencia', preference).subscribe({
-    next: (res) => {
-      this.cargando = false;
-      const preferenciaId = res.preferenceId;
-
-      this.mp.bricks().create('wallet', 'wallet_container', {
-        initialization: {
-          preferenceId: preferenciaId
-        },
-        customization: {
-          texts: {
-            valueProp: 'smart_option'
-          }
-        },
-        callbacks: {
-          onReady: () => {
-            console.log('✅ Brick listo');
-            this.cargando = false;
+  
+  try {
+    const { preferenceId } = await lastValueFrom(
+      this.http.post<{ preferenceId: string }>(
+        'https://backend-mp-sage.vercel.app/api/crear-preferencia',
+        { 
+          plan: { 
+            nombre: plan.nombre, 
+            precio: plan.precio 
           },
-          onError: (error: any) => {
-            console.error('❌ Error con Brick:', error);
-            this.cargando = false;
-          },
-          // 🔽 Agregás tu callback para guardar la compra
-          onSubmit: async () => {
-            const compra = {
-              userId: this.usuarioGoogleId,
-              email: this.email,
-              plan: plan.nombre
-            };
-
-            this.http.post('http://localhost:3000/api/guardar-compra', compra).subscribe({
-              next: (res) => {
-                console.log('✅ Compra guardada correctamente');
-              },
-              error: (err) => {
-                console.error('❌ Error al guardar la compra:', err);
-              }
-            });
-          }
+          origen: this.email
         }
-      });
-    },
-    error: (err) => {
-      console.error('❌ Error al obtener preferenceId:', err);
-      this.cargando = false;
-    }
-  });
-}
+      )
+    );
 
+    this.mp.bricks().create('wallet', 'wallet_container', {
+      initialization: { preferenceId },
+      callbacks: {
+        onReady: () => {
+          this.cargando = false;
+        },
+        onError: (error: Error) => {
+          console.error('Error en Brick de MercadoPago:', error);
+          Swal.fire('Error', 'No se pudo cargar el método de pago', 'error');
+          this.cargando = false;
+        }
+      }
+    });
+  } catch (error: unknown) {
+    console.error('Error al procesar pago:', error);
+    await Swal.fire('Error', 'Error al procesar el pago', 'error');
+    this.cargando = false;
+  }
+}
 }

@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, filter, map, of, switchMap, tap } from "rx
 import { AuthService } from "./AuthServices";
 
 @Injectable({ providedIn: 'root' })
+
 export class PlanService {
  private _planActivo = new BehaviorSubject<string | null>(null);
   planActivo$ = this._planActivo.asObservable();
