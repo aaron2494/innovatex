@@ -58,7 +58,7 @@ export class PlanesComponent  implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.mp = new MercadoPago('APP_USR-b90e2b2a-5f94-4cab-bbc1-2b894b993ebe', {
+    this.mp = new MercadoPago('APP_USR-2d076423-1a9e-4bb6-852d-b43808b975d2', {
       locale: 'es-AR'
     });
   }
@@ -92,7 +92,7 @@ prepararPago(plan: any) {
     origen: origen
   };
 
-  this.http.post<any>('https://backend-mp-sage.vercel.app/api/crear-preferencia', preference).subscribe({
+  this.http.post<any>('http://localhost:3000/api/crear-preferencia', preference).subscribe({
     next: (res) => {
       this.cargando = false;
       const preferenciaId = res.preferenceId;
@@ -123,7 +123,7 @@ prepararPago(plan: any) {
               plan: plan.nombre
             };
 
-            this.http.post('https://backend-mp-sage.vercel.app/api/guardar-compra', compra).subscribe({
+            this.http.post('http://localhost:3000/api/guardar-compra', compra).subscribe({
               next: (res) => {
                 console.log('✅ Compra guardada correctamente');
               },
