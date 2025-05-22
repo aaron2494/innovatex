@@ -59,7 +59,7 @@ export class PlanesComponent  implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.mp = new MercadoPago('APP_USR-fbdf46d0-634b-4f06-8ab9-6b38930a1468', {
+    this.mp = new MercadoPago('APP_USR-b90e2b2a-5f94-4cab-bbc1-2b894b993ebe', {
       locale: 'es-AR'
     });
   }
@@ -109,7 +109,7 @@ async prepararPago(plan: any): Promise<void> {
 
     const { preferenceId } = await lastValueFrom(
       this.http.post<{ preferenceId: string }>(
-        'http://localhost:3000/api/crear-preferencia',
+        'https://backend-mp-sage.vercel.app/api/crear-preferencia',
         body
       )
     );
