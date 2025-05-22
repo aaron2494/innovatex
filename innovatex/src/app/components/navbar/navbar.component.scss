@@ -39,6 +39,34 @@
     display: none;
   }
 }
+.btn-plan {
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.btn-basico {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #90caf9;
+}
+
+.btn-profesional {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #81c784;
+}
+
+.btn-premium {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+  border: 1px solid #ba68c8;
+}
+
+.btn-plan:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
 /* Drawer para móviles */
 .mobile-drawer {

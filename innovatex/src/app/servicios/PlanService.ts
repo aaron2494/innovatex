@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, catchError, filter, map, of, switchMap, tap } from "rxjs";
+import { BehaviorSubject, catchError, distinctUntilChanged, filter, map, of, switchMap, tap } from "rxjs";
 import { AuthService } from "./AuthServices";
 
 @Injectable({ providedIn: 'root' })
@@ -10,9 +10,10 @@ export class PlanService {
   planActivo$ = this._planActivo.asObservable();
 
   constructor(private http: HttpClient, private auth: AuthService) {
-    this.auth.user$.pipe(
-      filter(user => !!user?.email), // Filtra usuarios sin email
-      switchMap(user => this.cargarPlan(user!.email!)) // El ! indica que sabemos que no es null
+     this.auth.user$.pipe(
+      filter(user => !!user?.email),
+      distinctUntilChanged((prev, curr) => prev?.email === curr?.email),
+      switchMap(user => this.cargarPlan(user!.email!))
     ).subscribe();
   }
 

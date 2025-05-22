@@ -59,49 +59,103 @@ export class PlanesComponent  implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.mp = new MercadoPago('APP_USR-2d076423-1a9e-4bb6-852d-b43808b975d2', {
+    this.mp = new MercadoPago('APP_USR-fbdf46d0-634b-4f06-8ab9-6b38930a1468', {
       locale: 'es-AR'
     });
   }
 
 async prepararPago(plan: any): Promise<void> {
+  // Validar usuario logueado
   if (!this.email) {
-    await Swal.fire('Error', 'Debes iniciar sesión primero', 'warning');
+    await Swal.fire({
+      icon: 'warning',
+      title: 'Acceso requerido',
+      text: 'Debes iniciar sesión para realizar pagos',
+      confirmButtonText: 'Entendido'
+    });
+    return;
+  }
+
+  // Validar plan
+  if (!plan?.nombre || !plan?.precio) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Plan inválido',
+      text: 'El plan seleccionado no tiene la información necesaria',
+      confirmButtonText: 'OK'
+    });
     return;
   }
 
   this.cargando = true;
-  
+
   try {
+    // Crear cuerpo de la petición con estructura exacta que espera el backend
+    const body = {
+      plan: {
+        nombre: plan.nombre.trim(),
+        precio: Number(plan.precio) // Asegurar que es número
+      },
+      origen: this.email.trim(),
+      // Opcional: agregar metadata adicional
+      metadata: {
+        userId: this.usuarioGoogleId,
+        fecha: new Date().toISOString()
+      }
+    };
+
+    // Verificar estructura antes de enviar
+    console.log('Enviando a /api/crear-preferencia:', JSON.stringify(body, null, 2));
+
     const { preferenceId } = await lastValueFrom(
       this.http.post<{ preferenceId: string }>(
-        'https://backend-mp-sage.vercel.app/api/crear-preferencia',
-        { 
-          plan: { 
-            nombre: plan.nombre, 
-            precio: plan.precio 
-          },
-          origen: this.email
-        }
+        'http://localhost:3000/api/crear-preferencia',
+        body
       )
     );
 
+    // Configurar brick de pago
     this.mp.bricks().create('wallet', 'wallet_container', {
       initialization: { preferenceId },
       callbacks: {
         onReady: () => {
           this.cargando = false;
+          console.log('Brick de pago listo');
         },
         onError: (error: Error) => {
           console.error('Error en Brick de MercadoPago:', error);
-          Swal.fire('Error', 'No se pudo cargar el método de pago', 'error');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error en pasarela de pago',
+            text: 'No se pudo cargar el método de pago. Por favor intenta nuevamente.',
+            confirmButtonText: 'Entendido'
+          });
           this.cargando = false;
+        },
+        onSubmit: () => {
+          console.log('Pago iniciado para plan:', plan.nombre);
         }
       }
     });
-  } catch (error: unknown) {
-    console.error('Error al procesar pago:', error);
-    await Swal.fire('Error', 'Error al procesar el pago', 'error');
+
+  } catch (error: any) {
+    console.error('Error completo:', error);
+    
+    let errorMessage = 'Error al procesar el pago';
+    if (error.status === 400) {
+      errorMessage = 'Datos inválidos para procesar el pago';
+    } else if (error.status === 500) {
+      errorMessage = 'Error interno del servidor';
+    }
+
+    await Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: errorMessage,
+      footer: error.error?.message ? `<small>${error.error.message}</small>` : '',
+      confirmButtonText: 'Entendido'
+    });
+    
     this.cargando = false;
   }
 }
