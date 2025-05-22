@@ -42,7 +42,7 @@ export class PlanesComponent  implements AfterViewInit {
   mp: any;
   planSeleccionado: any = null;
   cargando = false;
-
+  isLogging = false;
   ngOnInit() {
     
    this.auth.user$.subscribe(user => {
@@ -66,13 +66,36 @@ export class PlanesComponent  implements AfterViewInit {
 
 async prepararPago(plan: any): Promise<void> {
   // Validar usuario logueado
-  if (!this.email) {
-    await Swal.fire({
+ if (!this.email) {
+    const result = await Swal.fire({
       icon: 'warning',
       title: 'Acceso requerido',
-      text: 'Debes iniciar sesión para realizar pagos',
-      confirmButtonText: 'Entendido'
+      text: 'Debes iniciar sesión con Google para realizar pagos',
+      confirmButtonText: 'Iniciar sesión',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar'
     });
+
+    if (result.isConfirmed) {
+      this.isLogging = true;
+      this.auth.loginWithGoogle().subscribe({
+        next: () => {
+          this.isLogging = false;
+
+          // 🔁 Volver a intentar el flujo de pago
+          this.prepararPago(plan);
+        },
+        error: () => {
+          this.isLogging = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Error de autenticación',
+            text: 'No se pudo iniciar sesión. Inténtalo nuevamente.'
+          });
+        }
+      });
+    }
+
     return;
   }
 
