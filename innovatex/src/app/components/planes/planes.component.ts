@@ -1,3 +1,4 @@
+import { PlanService } from './../../servicios/PlanService';
 import { CommonModule, NgFor } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ import { lastValueFrom } from 'rxjs';
 })
 
 export class PlanesComponent  implements AfterViewInit {
+  [x: string]: any;
   planes = [
   { 
     nombre: 'Básico', 
@@ -33,7 +35,7 @@ export class PlanesComponent  implements AfterViewInit {
     precio: 3
   }
 ];
-  constructor(private auth: AuthService,private http: HttpClient){
+  constructor(private auth: AuthService,private http: HttpClient, planService: PlanService){
   }
   
 
@@ -113,22 +115,21 @@ async prepararPago(plan: any): Promise<void> {
   this.cargando = true;
 
   try {
-    // Crear cuerpo de la petición con estructura exacta que espera el backend
     const body = {
       plan: {
         nombre: plan.nombre.trim(),
-        precio: Number(plan.precio) // Asegurar que es número
+        precio: Number(plan.precio)
       },
       origen: this.email.trim(),
-      // Opcional: agregar metadata adicional
       metadata: {
         userId: this.usuarioGoogleId,
-        fecha: new Date().toISOString()
+        fecha: new Date().toISOString(),
+        // 👇 Añade un identificador único para tracking
+        frontendId: Math.random().toString(36).substring(2, 11)
       }
     };
 
-    // Verificar estructura antes de enviar
-    console.log('Enviando a /api/crear-preferencia:', JSON.stringify(body, null, 2));
+    console.log('Datos enviados:', body);
 
     const { preferenceId } = await lastValueFrom(
       this.http.post<{ preferenceId: string }>(
@@ -137,26 +138,17 @@ async prepararPago(plan: any): Promise<void> {
       )
     );
 
-    // Configurar brick de pago
     this.mp.bricks().create('wallet', 'wallet_container', {
       initialization: { preferenceId },
       callbacks: {
-        onReady: () => {
-          this.cargando = false;
-          console.log('Brick de pago listo');
-        },
-        onError: (error: Error) => {
-          console.error('Error en Brick de MercadoPago:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error en pasarela de pago',
-            text: 'No se pudo cargar el método de pago. Por favor intenta nuevamente.',
-            confirmButtonText: 'Entendido'
-          });
-          this.cargando = false;
-        },
-        onSubmit: () => {
-          console.log('Pago iniciado para plan:', plan.nombre);
+        // ... otros callbacks ...
+        onPayment: async (response: any) => {
+          console.log('Estado del pago:', response.status);
+          if (response.status === 'approved') {
+            // Verificar en backend después de 5 segundos
+            setTimeout(() => {
+            }, 5000);
+          }
         }
       }
     });
@@ -182,4 +174,5 @@ async prepararPago(plan: any): Promise<void> {
     this.cargando = false;
   }
 }
+
 }

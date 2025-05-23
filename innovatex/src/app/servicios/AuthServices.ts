@@ -35,7 +35,7 @@ export class AuthService {
       const user = userCredential.user;
       // Guardado optimizado en localStorage
       console.log("Datos del usuario:");
-    console.log(user);
+   
       localStorage.setItem('usuario', JSON.stringify({
         uid: user.uid,
         email: user.email,
