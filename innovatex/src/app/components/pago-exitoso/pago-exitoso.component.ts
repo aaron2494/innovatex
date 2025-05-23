@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { PlanService } from '../../servicios/PlanService';
 import { AuthService } from '../../servicios/AuthServices';
 
