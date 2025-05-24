@@ -7,6 +7,7 @@ declare var MercadoPago: any;
 import Swal from 'sweetalert2';
 import { AuthService } from '../../servicios/AuthServices';
 import { lastValueFrom } from 'rxjs';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-planes',
@@ -35,7 +36,7 @@ export class PlanesComponent  implements AfterViewInit {
     precio: 3
   }
 ];
-  constructor(private auth: AuthService,private http: HttpClient, planService: PlanService){
+  constructor(private auth: AuthService,private http: HttpClient,private planService: PlanService,private router : Router){
   }
   
 
@@ -123,8 +124,9 @@ async prepararPago(plan: any): Promise<void> {
       origen: this.email.trim(),
       metadata: {
         userId: this.usuarioGoogleId,
+        email: this.email.trim(), // 👈 Asegura que el email está en metadata
+        plan: plan.nombre.trim(), // 👈 Añade el nombre del plan directamente
         fecha: new Date().toISOString(),
-        // 👇 Añade un identificador único para tracking
         frontendId: Math.random().toString(36).substring(2, 11)
       }
     };
@@ -141,15 +143,48 @@ async prepararPago(plan: any): Promise<void> {
     this.mp.bricks().create('wallet', 'wallet_container', {
       initialization: { preferenceId },
       callbacks: {
-        // ... otros callbacks ...
-        onPayment: async (response: any) => {
-          console.log('Estado del pago:', response.status);
-          if (response.status === 'approved') {
-            // Verificar en backend después de 5 segundos
-            setTimeout(() => {
-            }, 5000);
-          }
-        }
+        onReady: () => {
+          this.cargando = false;
+        },
+        onError: (error: any) => {
+          console.error('Error en Brick:', error);
+          this.cargando = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Error en el pago',
+            text: 'Ocurrió un problema al procesar el pago'
+          });
+        },
+       onPayment: async (response: any) => {
+  console.log('Estado del pago:', response.status);
+  if (response.status === 'approved') {
+    // 1. Mostrar confirmación
+    await Swal.fire({
+      icon: 'success',
+      title: '¡Pago exitoso!',
+      text: 'Estamos activando tu plan...',
+      timer: 2000,
+      showConfirmButton: false
+    });
+    
+    // 2. Verificar con el backend
+    try {
+      await lastValueFrom(
+        this.http.get(`https://backend-mp-sage.vercel.app/api/usuario/${this.email}/plan`)
+      );
+      
+      // 3. Redirigir
+      this.router.navigate(['/pago-exitoso']);
+    } catch (error) {
+      console.error('Error verificando plan:', error);
+      Swal.fire({
+        icon: 'warning',
+        title: 'Plan en proceso',
+        text: 'Tu pago fue exitoso pero la activación puede demorar unos minutos'
+      });
+    }
+  }
+}
       }
     });
 
