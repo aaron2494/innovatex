@@ -22,4 +22,4 @@ export const planGuard: CanActivateFn = (route, state) => {
       }
     });
   });
-};
+};  

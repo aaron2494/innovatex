@@ -6,7 +6,7 @@ import { AuthService } from "./AuthServices";
 @Injectable({ providedIn: 'root' })
 
 export class PlanService {
-   private _planActivo = new BehaviorSubject<string | null>(null);
+ private _planActivo = new BehaviorSubject<string | null>(null);
   planActivo$ = this._planActivo.asObservable();
 
   constructor(private http: HttpClient, private auth: AuthService) {
@@ -21,17 +21,34 @@ export class PlanService {
     ).subscribe();
   }
 
-  cargarPlan(email: string): Observable<string | null> {
-    return this.http.get<{planAdquirido: string}>(
-      `https://backend-mp-sage.vercel.app/api/usuario/${email}/plan`
+  cargarPlan(email: string): Observable<{planAdquirido: string | null, active: boolean}> {
+    return this.http.get<{planAdquirido: string | null, active: boolean}>(
+      `https://backend-mp-sage.vercel.app/api/usuario/${encodeURIComponent(email)}/plan`
     ).pipe(
-      map(res => res.planAdquirido),
-      catchError(() => of(null)),
-      tap(plan => this._planActivo.next(plan))
+      catchError(() => of({planAdquirido: null, active: false})),
+      tap(response => this._planActivo.next(response.planAdquirido))
     );
   }
-
-  actualizarPlan(plan: string): void {
-    this._planActivo.next(plan.toLowerCase());
+  verificarPlan(email: string): Observable<{planAdquirido: string | null}> {
+    return this.http.get<{planAdquirido: string}>(
+      `https://backend-mp-sage.vercel.app/api/usuario/${encodeURIComponent(email)}/plan`
+    ).pipe(
+      map(response => ({
+        planAdquirido: response?.planAdquirido || null
+      })),
+      catchError(() => of({planAdquirido: null}))
+    );
   }
+  verificarPlanUsuario(email: string): Observable<{planAdquirido: string}> {
+    return this.http.get<{planAdquirido: string}>(
+      `https://backend-mp-sage.vercel.app/api/usuario/${encodeURIComponent(email)}/plan`
+    ).pipe(
+      catchError(() => {
+        throw new Error('Error al verificar el plan');
+      })
+    );
+  }
+  actualizarPlan(plan: string): void {
+  this._planActivo.next(plan.toLowerCase());
+}
 }
