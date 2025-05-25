@@ -132,7 +132,7 @@ async prepararPago(plan: any): Promise<void> {
 
     const { preferenceId } = await lastValueFrom(
       this.http.post<{ preferenceId: string }>(
-        'https://backend-mp-sage.vercel.app/ap/crear-preferencia',
+        'https://backend-mp-sage.vercel.app/api/crear-preferencia',
         body
       )
     );
@@ -210,7 +210,7 @@ async prepararPago(plan: any): Promise<void> {
 
     // Ahora sí consultar si se activó
     let planVerificado = false;
-    
+
       const MAX_INTENTOS = 3;
       
       for (let intento = 0; intento < MAX_INTENTOS && !planVerificado; intento++) {
