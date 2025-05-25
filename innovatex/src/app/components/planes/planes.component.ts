@@ -62,7 +62,7 @@ export class PlanesComponent  implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.mp = new MercadoPago('APP_USR-b90e2b2a-5f94-4cab-bbc1-2b894b993ebe', {
+    this.mp = new MercadoPago('APP_USR-9b89971e-3ebe-40ed-9870-1d33acd00f4a', {
       locale: 'es-AR'
     });
   }
