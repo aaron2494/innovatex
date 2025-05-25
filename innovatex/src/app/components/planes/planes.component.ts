@@ -183,72 +183,85 @@ async prepararPago(plan: any): Promise<void> {
   }
 }
 
-private async manejarPagoExitoso(plan: any): Promise<void> {
-  // Mostrar loading
-  const loadingSwal = await Swal.fire({
-    title: 'Procesando tu pago...',
-    html: 'Estamos activando tu plan. Esto puede tomar unos segundos.',
-    allowOutsideClick: false,
-    showConfirmButton: false,
-    willOpen: () => {
-      Swal.showLoading();
-    }
-  });
+  private async manejarPagoExitoso(plan: any): Promise<void> {
+    // Mostrar loading
+    const loadingSwal = await Swal.fire({
+      title: 'Procesando tu pago...',
+      html: 'Estamos activando tu plan. Esto puede tomar unos segundos.',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
 
-  try {
-    // Intentar verificar el plan
-    let planVerificado = false;
-    const MAX_INTENTOS = 3;
-    
-    for (let intento = 0; intento < MAX_INTENTOS && !planVerificado; intento++) {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Espera 2 segundos
-      
-      try {
-        const response = await lastValueFrom(
-          this.http.get<{planAdquirido: string}>(
-            `https://backend-mp-sage.vercel.app/api/usuario/${encodeURIComponent(this.email)}/plan`
-          )
-        );
-        
-        if (response?.planAdquirido) {
-          planVerificado = true;
-          // Actualizar el estado del plan en el servicio
-          if (this.planService['actualizarPlan']) {
-            this.planService['actualizarPlan'](response.planAdquirido);
-          }
+    try {
+         await lastValueFrom(
+      this.http.post('https://backend-mp-sage.vercel.app/api/activar-plan', {
+        email: this.email,
+        plan: plan.nombre,
+        pago: {
+          id: 'manual-' + Date.now(),
+          monto: plan.precio,
+          metodo: 'manual'
         }
-      } catch (error) {
-        console.error(`Intento ${intento + 1} - Error verificando plan:`, error);
+      })
+    );
+
+    // Ahora sí consultar si se activó
+    let planVerificado = false;
+    
+      const MAX_INTENTOS = 3;
+      
+      for (let intento = 0; intento < MAX_INTENTOS && !planVerificado; intento++) {
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Espera 2 segundos
+        
+        try {
+          const response = await lastValueFrom(
+            this.http.get<{planAdquirido: string}>(
+              `https://backend-mp-sage.vercel.app/api/usuario/${encodeURIComponent(this.email)}/plan`
+            )
+          );
+          
+          if (response?.planAdquirido) {
+            planVerificado = true;
+            // Actualizar el estado del plan en el servicio
+            if (this.planService['actualizarPlan']) {
+              this.planService['actualizarPlan'](response.planAdquirido);
+            }
+          }
+        } catch (error) {
+          console.error(`Intento ${intento + 1} - Error verificando plan:`, error);
+        }
+      }
+
+      // Cerrar loading
+      await Swal.fire({
+        icon: planVerificado ? 'success' : 'warning',
+        title: planVerificado ? '¡Plan activado!' : 'Pago exitoso - Activación pendiente',
+        text: planVerificado 
+          ? 'Tu plan ha sido activado correctamente' 
+          : 'Tu pago fue procesado pero la activación está demorando más de lo esperado. Por favor verifica en unos minutos.',
+        confirmButtonText: 'Entendido'
+      });
+
+      // Redirigir
+      this.router.navigate([planVerificado ? '/pago-exitoso' : '/perfil']);
+
+    } catch (error) {
+      console.error('Error en el proceso post-pago:', error);
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error al verificar el pago',
+        text: 'Por favor contacta a soporte técnico',
+        confirmButtonText: 'Entendido'
+      });
+    } finally {
+      // Cerrar el loading si aún está abierto
+      if (Swal.isVisible()) {
+        Swal.close();
       }
     }
-
-    // Cerrar loading
-    await Swal.fire({
-      icon: planVerificado ? 'success' : 'warning',
-      title: planVerificado ? '¡Plan activado!' : 'Pago exitoso - Activación pendiente',
-      text: planVerificado 
-        ? 'Tu plan ha sido activado correctamente' 
-        : 'Tu pago fue procesado pero la activación está demorando más de lo esperado. Por favor verifica en unos minutos.',
-      confirmButtonText: 'Entendido'
-    });
-
-    // Redirigir
-    this.router.navigate([planVerificado ? '/pago-exitoso' : '/perfil']);
-
-  } catch (error) {
-    console.error('Error en el proceso post-pago:', error);
-    await Swal.fire({
-      icon: 'error',
-      title: 'Error al verificar el pago',
-      text: 'Por favor contacta a soporte técnico',
-      confirmButtonText: 'Entendido'
-    });
-  } finally {
-    // Cerrar el loading si aún está abierto
-    if (Swal.isVisible()) {
-      Swal.close();
-    }
   }
-}
 
 }
