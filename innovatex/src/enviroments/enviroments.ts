@@ -1,11 +1,11 @@
 export const environment = {
   firebase: {
-   apiKey: "AIzaSyCoMyxSSud_Bmuz4fCwxlOzvcFULRWw27g",
-  authDomain: "innovatech-f77d8.firebaseapp.com",
-  projectId: "innovatech-f77d8",
-  storageBucket: "innovatech-f77d8.firebasestorage.app",
-  messagingSenderId: "582746258217",
-  appId: "1:582746258217:web:6a10b9161a39b084535538",
-  measurementId: "G-3DYYDG5HPS"
-  },
+  apiKey: "AIzaSyBp4Yf8_3avnQSacDT9idP0DruzB61SAZo",
+  authDomain: "innova2-3e8e4.firebaseapp.com",
+  projectId: "innova2-3e8e4",
+  storageBucket: "innova2-3e8e4.appspot.com",
+  messagingSenderId: "923857950333",
+  appId: "1:923857950333:web:ac5f68a059fd8f0dcdc314",
+  measurementId: "G-7SS7WEYE20"
+}
 };

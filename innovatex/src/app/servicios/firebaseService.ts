@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { Injectable, inject } from '@angular/core';
+import { getFirestore, doc, getDoc, setDoc, Firestore } from '@angular/fire/firestore';
+
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
-  private db = getFirestore();
+ private db: Firestore;
+
+  constructor() {
+    this.db = inject(Firestore); // ✅ usa Angular DI (espera a initializeApp)
+  }
 
   async getUserPlan(email: string): Promise<string | null> {
     const docRef = doc(this.db, 'usuarios', email);

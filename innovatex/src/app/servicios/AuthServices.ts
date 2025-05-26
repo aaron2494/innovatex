@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -6,21 +6,24 @@ import {
   onAuthStateChanged,
   getAuth,
   User,
+  Auth,
 } from '@angular/fire/auth';
 import {  BehaviorSubject} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private auth = getAuth();
-  private userSubUject = new BehaviorSubject<User | null>(null);
-  user$ = new BehaviorSubject<any>(null);
+ private auth: Auth;
+  user$ = new BehaviorSubject<User | null>(null);
 
   constructor() {
+    this.auth = inject(Auth); // ✅ usa Angular DI
     onAuthStateChanged(this.auth, user => this.user$.next(user));
   }
+
   get userLoggedIn(): boolean {
     return this.auth.currentUser !== null;
   }
+
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(this.auth, provider);
