@@ -1,34 +1,13 @@
-<section class="py-4 bg-warning text-dark text-center">
-  <strong>Promoción de mayo:</strong> todos los planes con <span class="fw-bold">20% de descuento</span>. ¡No te lo pierdas!
-</section>
-<div id="planes" class="container py-5 text-center">
-  <h2 class="mb-4">Nuestros planes</h2>
-  <div class="row">
-    <div class="col-md-4" *ngFor="let plan of planes">
-      <div class="card shadow mb-4">
-        <div class="card-body">
-          <h5 class="card-title">{{ plan.nombre }}</h5>
-          <p class="card-text">{{ plan.descripcion }}</p>
-          <p class="fw-bold">$ {{ plan.precio }}</p>
-          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPago" (click)="prepararPago(plan)">Adquirir</button>
-        </div>
-      </div>
+<ng-container *ngIf="auth.user$ | async as user; else loginAlert">
+  <div class="planes-container">
+    <div *ngFor="let plan of planes" class="plan-card">
+      <h2 class="plan-title">{{ plan.nombre | titlecase }}</h2>
+      <p class="plan-description">{{ plan.descripcion }}</p>
+      <button class="buy-button" (click)="buy(plan)">Adquirir</button>
     </div>
   </div>
-</div>
+</ng-container>
 
-<!-- Modal -->
-<div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="modalPagoLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4">
-      <h5 class="modal-title">Simulación de pago</h5>
-      <p><strong>Plan seleccionado:</strong> {{ planSeleccionado?.nombre }}</p>
-      <div *ngIf="cargando" class="d-flex justify-content-center my-3">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Cargando...</span>
-  </div>
-</div>
-      <div id="wallet_container"></div>
-    </div>
-  </div>
-</div>
+<ng-template #loginAlert>
+  <button (click)="showLoginAlert()">Ver planes</button>
+</ng-template>

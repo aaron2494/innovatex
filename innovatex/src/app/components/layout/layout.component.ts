@@ -12,7 +12,7 @@ import { ButtomComponent } from "../buttom/buttom.component";
 
 @Component({
   selector: 'app-layout',
-  imports: [NavbarComponent, FooterComponent, HeroComponent, ServicesComponent, AboutComponent, ProjectsComponent, PlanesComponent, DashboardComponent, TestimoniosComponent, ButtomComponent],
+  imports: [NavbarComponent, FooterComponent, HeroComponent, ServicesComponent, PlanesComponent, DashboardComponent, TestimoniosComponent, ButtomComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
