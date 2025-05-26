@@ -9,7 +9,7 @@ export class PaymentService {
 
   createPreference(plan: string, userEmail: string) {
     return this.http.post<{ init_point: string }>(
-      `${this.backendUrl}/create-preference`,
+      `${this.backendUrl}/api/create-preference`,
       { plan, userEmail }
     );
   }
