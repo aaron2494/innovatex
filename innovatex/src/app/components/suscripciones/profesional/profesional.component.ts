@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-profesional',
   imports: [CommonModule],
@@ -9,10 +10,10 @@ import { Location } from '@angular/common';
   styleUrl: './profesional.component.scss'
 })
 export class ProfesionalComponent implements AfterViewInit{
- constructor(private location: Location) {}
+ constructor(private router:Router) {}
 
-  volver() {
-    this.location.back();
+   goHome() {
+    this.router.navigate(['/']);
   }
 
   ngAfterViewInit(): void {

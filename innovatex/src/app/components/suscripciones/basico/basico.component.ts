@@ -1,6 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-basico',
   imports: [],
@@ -8,10 +9,10 @@ import { Location } from '@angular/common';
   styleUrl: './basico.component.scss'
 })
 export class BasicoComponent implements AfterViewInit {
-constructor(private location: Location) {}
+constructor(private router:Router) {}
 
-  volver() {
-    this.location.back();
+  goHome() {
+    this.router.navigate(['/']);
   }
 
   ngAfterViewInit(): void {

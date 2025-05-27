@@ -14,14 +14,13 @@
     <!-- CONTENIDO DEL NAVBAR -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
       <ng-container *ngIf="authService.user$ | async as user; else login">
-        <div class="d-flex align-items-center">
-          <img [src]="user.photoURL" alt="Foto" class="rounded-circle me-2" width="40" height="40">
-          <div class="text-end">
-            <div class="fw-semibold">{{ user.displayName || user.email }}</div>
-            <small class="text-muted" *ngIf="userPlan">Plan: {{ userPlan | titlecase }}</small>
-          </div>
-          <button class="btn btn-outline-danger btn-sm" (click)="logout()">Cerrar sesión</button>
-        </div>
+      <div *ngIf="user; else login" class="d-flex align-items-center gap-2">
+  <img [src]="user.photoURL" class="rounded-circle" width="30" height="30" />
+  <span>{{ user.displayName }}</span>
+  <span *ngIf="userPlan" class="badge bg-success text-uppercase">Plan {{ userPlan }}</span>
+  <a *ngIf="userPlan" [routerLink]="'/plan-' + userPlan" class="btn btn-outline-primary btn-sm">Mi Plan</a>
+  <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+</div>
       </ng-container>
 
       <!-- BOTÓN LOGIN -->
