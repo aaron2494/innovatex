@@ -1,10 +1,11 @@
 .services-section {
   padding: 5rem 2rem;
-  background: linear-gradient(to bottom, #ffffff, #f3f8fd);
+  background: linear-gradient(to top, #ffffff, #d0e5fa);
   text-align: center;
 
   h2 {
     font-size: 2.5rem;
+    font-weight: bold;
     margin-bottom: 3rem;
     
   }
@@ -72,7 +73,8 @@
       }
     }
 
-    button {
+    .button {
+      color: #1976d2 !important;
       font-weight: 600;
     }
   }

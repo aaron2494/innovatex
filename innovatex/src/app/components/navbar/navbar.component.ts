@@ -8,28 +8,29 @@ import { FirebaseService } from '../../servicios/firebaseService';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule,RouterLink,NgIf],
+  imports: [CommonModule,NgIf],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit{
-userPlan: string | null = null;
- planUsuario=''
+ userPlan: string | null = null;
 
-constructor(private authService:AuthService, private firebaseService: FirebaseService){
-}
-  ngOnInit() {
-  this.authService.user$.subscribe(user => {
-    const email = user?.email;
-    if (email) {
-      this.firebaseService.getUserPlan(email).then(plan => {
-        if (plan) {
+  constructor(
+    public authService: AuthService, // debe ser público para usarlo en el template
+    private firebaseService: FirebaseService
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      const email = user?.email;
+      if (email) {
+        this.firebaseService.getUserPlan(email).then(plan => {
           this.userPlan = plan;
-        }
-      });
-    }
-  });
+        });
+      }
+    });
+  }
+  logout() {
+  this.authService.logout();
 }
- 
 }
- 
