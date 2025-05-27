@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
-  private backendUrl = 'https://backend-mp-g3mr.vercel.app'; 
+  private backendUrl = 'https://backend-mp-chi.vercel.app'; 
 
   constructor(private http: HttpClient) {}
 
