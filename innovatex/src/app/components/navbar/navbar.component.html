@@ -11,16 +11,26 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- CONTENIDO DEL NAVBAR -->
+    <!-- CONTENIDO -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
       <ng-container *ngIf="authService.user$ | async as user; else login">
-      <div *ngIf="user; else login" class="d-flex align-items-center gap-2">
-  <img [src]="user.photoURL" class="rounded-circle" width="30" height="30" />
-  <span>{{ user.displayName }}</span>
-  <span *ngIf="userPlan" class="badge bg-success text-uppercase">Plan {{ userPlan }}</span>
-  <a *ngIf="userPlan" [routerLink]="'/plan-' + userPlan" class="btn btn-outline-primary btn-sm">Mi Plan</a>
-  <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
-</div>
+        <div class="d-flex align-items-center gap-2">
+          <img [src]="user.photoURL" class="rounded-circle" width="30" height="30" alt="Foto de perfil" />
+          <span>{{ user.displayName }}</span>
+
+          <!-- BOTÓN DE PLAN -->
+          <a *ngIf="userPlan" [routerLink]="'/plan-' + userPlan" class="btn btn-plan btn-sm"
+             [ngClass]="{
+               'btn-basico': userPlan === 'básico',
+               'btn-profesional': userPlan === 'profesional',
+               'btn-premium': userPlan === 'premium'
+             }">
+            Plan {{ userPlan | titlecase }}
+          </a>
+
+          <!-- BOTÓN LOGOUT -->
+          <button class="btn btn-danger btn-sm" (click)="logout()">Logout</button>
+        </div>
       </ng-container>
 
       <!-- BOTÓN LOGIN -->
@@ -30,7 +40,3 @@
     </div>
   </div>
 </nav>
-
-
-
-

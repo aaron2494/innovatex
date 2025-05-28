@@ -1,18 +1,18 @@
-.card {
-  background: #f8f9fa;
-  border-radius: 1rem;
-  transition: transform 0.3s ease;
+.container{
+background: linear-gradient(to right, #0d47a1, #1976d2);
+}
 
+.titulo{
+  color: white;
+}
+.parrafo1{
+  color: white;
+  font-size: medium;
+}
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   &:hover {
     transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   }
-}
-
-ul li {
-  font-size: 1.1rem;
-  padding: 0.5rem 0;
-}
-canvas {
-  max-width: 100%;
-  margin-top: 2rem;
 }

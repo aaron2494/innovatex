@@ -1,26 +1,57 @@
+
 <div class="container py-5">
-  <h2 class="text-center mb-4">Plan Profesional</h2>
-  <p class="lead text-center mb-5">Soluciones tecnológicas personalizadas para empresas con visión a largo plazo.</p>
+  <h2 class="titulo text-center fw-bold mb-3" style="font-size: 2.5rem;">Plan Profesional</h2>
+  <p class="parrafo1 lead text-center mb-5">Soluciones tecnológicas diseñadas para empresas con visión, eficiencia y escalabilidad.</p>
 
-  <div class="row justify-content-center mb-4">
-    <div class="col-md-8">
-      <div class="card shadow-lg border-0 p-4">
-        <h4 class="mb-3">Incluye:</h4>
+  <!-- Características -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-10 col-lg-8">
+      <div class="card border-0 shadow-lg p-4 rounded-4">
+        <h4 class="mb-3 fw-semibold text-primary">Incluye:</h4>
         <ul class="list-group list-group-flush mb-4">
-          <li class="list-group-item">✔ Consultoría tecnológica avanzada</li>
-          <li class="list-group-item">✔ Integración con sistemas existentes</li>
-          <li class="list-group-item">✔ Soporte técnico prioritario 24/7</li>
-          <li class="list-group-item">✔ Desarrollo de software a medida</li>
-          <li class="list-group-item">✔ Automatización de procesos empresariales</li>
+          <li class="list-group-item bg-transparent border-0">✅ Consultoría tecnológica avanzada</li>
+          <li class="list-group-item bg-transparent border-0">✅ Integración con sistemas existentes</li>
+          <li class="list-group-item bg-transparent border-0">✅ Soporte técnico prioritario 24/7</li>
+          <li class="list-group-item bg-transparent border-0">✅ Desarrollo de software a medida</li>
+          <li class="list-group-item bg-transparent border-0">✅ Automatización de procesos empresariales</li>
         </ul>
-
-        <button class="btn btn-outline-primary" (click)="goHome()">← Volver</button>
+        <button class="btn btn-outline-primary w-100 mt-3" (click)="goHome()">← Volver al Panel</button>
       </div>
     </div>
   </div>
 
-  <!-- Sección informativa adicional -->
-  <div class="row justify-content-center mt-5">
+  <!-- Métricas -->
+  <div class="row text-center g-4">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card border-0 shadow-sm p-4 rounded-4 h-100 animate__animated animate__fadeInUp">
+        <i class="bi bi-graph-up-arrow display-5 text-success mb-2"></i>
+        <h6 class="fw-bold">Eficiencia Operativa</h6>
+        <p class="display-6 fw-semibold text-success mb-0" id="counter1">0%</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card border-0 shadow-sm p-4 rounded-4 h-100 animate__animated animate__fadeInUp animate__delay-1s">
+        <i class="bi bi-cash-stack display-5 text-danger mb-2"></i>
+        <h6 class="fw-bold">Reducción de Costos</h6>
+        <p class="display-6 fw-semibold text-danger mb-0" id="counter2">0%</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card border-0 shadow-sm p-4 rounded-4 h-100 animate__animated animate__fadeInUp animate__delay-2s">
+        <i class="bi bi-lightning-charge-fill display-5 text-primary mb-2"></i>
+        <h6 class="fw-bold">Velocidad de Respuesta</h6>
+        <p class="display-6 fw-semibold text-primary mb-0" id="counter3">0%</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card border-0 shadow-sm p-4 rounded-4 h-100 animate__animated animate__fadeInUp animate__delay-3s">
+        <i class="bi bi-clock-history display-5 text-warning mb-2"></i>
+        <h6 class="fw-bold">Horas Ahorradas</h6>
+        <p class="display-6 fw-semibold text-warning mb-0" id="counter4">0</p>
+      </div>
+    </div>
+  </div>
+   <div class="row justify-content-center mt-4">
     <div class="col-md-10">
       <div class="card shadow-sm p-4">
         <h5>¿Por qué elegir el Plan Profesional?</h5>
@@ -33,7 +64,7 @@
           <li>⏱ Mejora en tiempos de respuesta al cliente en un 50%</li>
         </ul>
 
-        <canvas id="statsChart"></canvas>
+        <canvas id="statsChart" class="mt-4"></canvas>
       </div>
     </div>
   </div>

@@ -24,9 +24,7 @@ export class NavbarComponent implements OnInit{
       const email = user?.email;
       if (email) {
         this.firebaseService.getUserPlan(email).then(plan => {
-          if (plan) {
-            this.userPlan = plan;
-          }
+          this.userPlan = plan || null;
         });
       }
     });

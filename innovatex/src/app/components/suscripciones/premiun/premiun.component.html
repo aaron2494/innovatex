@@ -1,39 +1,68 @@
 <div class="container py-5">
-  <h2 class="text-center mb-4">Plan premiun</h2>
-  <p class="lead text-center mb-5">Soluciones tecnológicas personalizadas para empresas con visión a largo plazo.</p>
+  <h2 class="text-center fw-bold mb-3 display-5 text-dark">Plan Premium</h2>
+  <p class="lead text-center text-muted mb-5">Transformación digital integral para empresas que buscan escalar con tecnología de vanguardia.</p>
 
-  <div class="row justify-content-center mb-4">
-    <div class="col-md-8">
-      <div class="card shadow-lg border-0 p-4">
-        <h4 class="mb-3">Incluye:</h4>
-        <ul class="list-group list-group-flush mb-4">
-          <li class="list-group-item">✔ Consultoría tecnológica avanzada</li>
-          <li class="list-group-item">✔ Integración con sistemas existentes</li>
-          <li class="list-group-item">✔ Soporte técnico prioritario 24/7</li>
-          <li class="list-group-item">✔ Desarrollo de software a medida</li>
-          <li class="list-group-item">✔ Automatización de procesos empresariales</li>
+  <!-- Beneficios Premium -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-10">
+      <div class="card shadow-lg border-0 p-5 rounded-4 bg-light animate__animated animate__fadeIn">
+        <h4 class="mb-4 text-primary fw-bold"><i class="bi bi-stars me-2"></i>Beneficios Exclusivos</h4>
+        <ul class="list-group list-group-flush mb-4 fs-5">
+          <li class="list-group-item bg-transparent border-0">🚀 Infraestructura cloud dedicada y escalable</li>
+          <li class="list-group-item bg-transparent border-0">🔒 Seguridad avanzada con auditoría constante</li>
+          <li class="list-group-item bg-transparent border-0">🤝 Consultoría continua + reuniones mensuales</li>
+          <li class="list-group-item bg-transparent border-0">🧠 Inteligencia Artificial aplicada a tus procesos</li>
+          <li class="list-group-item bg-transparent border-0">📊 Reportes automáticos y dashboard personalizado</li>
         </ul>
-
-        <button class="btn btn-outline-primary" (click)="goHome()">← Volver</button>
+        <button class="btn btn-gradient w-100 mt-3" (click)="goHome()">← Volver al Panel</button>
       </div>
     </div>
   </div>
 
-  <!-- Sección informativa adicional -->
-  <div class="row justify-content-center mt-5">
-    <div class="col-md-10">
-      <div class="card shadow-sm p-4">
-        <h5>¿Por qué elegir el Plan Profesional?</h5>
-        <p>El Plan Profesional está diseñado para empresas que requieren escalabilidad, estabilidad y soporte personalizado. A través de nuestras herramientas, ayudamos a automatizar tareas clave, reducir tiempos operativos y aumentar la productividad.</p>
-        
-        <p>Empresas que eligen este plan han logrado en promedio:</p>
-        <ul>
-          <li>📈 Aumento del 45% en eficiencia operativa</li>
-          <li>💰 Reducción del 30% en costos de procesos manuales</li>
-          <li>⏱ Mejora en tiempos de respuesta al cliente en un 50%</li>
-        </ul>
+  <!-- Métricas animadas -->
+  <div class="row text-center g-4 mb-5">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card p-4 rounded-4 shadow-sm animate__animated animate__fadeInUp">
+        <i class="bi bi-cpu-fill display-6 text-primary mb-2"></i>
+        <h6 class="fw-bold">Automatización Total</h6>
+        <p class="display-6 text-primary fw-bold mb-0" id="counter1">0%</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card p-4 rounded-4 shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
+        <i class="bi bi-shield-lock-fill display-6 text-danger mb-2"></i>
+        <h6 class="fw-bold">Seguridad Reforzada</h6>
+        <p class="display-6 text-danger fw-bold mb-0" id="counter2">0%</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card p-4 rounded-4 shadow-sm animate__animated animate__fadeInUp animate__delay-2s">
+        <i class="bi bi-speedometer2 display-6 text-success mb-2"></i>
+        <h6 class="fw-bold">Escalabilidad</h6>
+        <p class="display-6 text-success fw-bold mb-0" id="counter3">0%</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card p-4 rounded-4 shadow-sm animate__animated animate__fadeInUp animate__delay-3s">
+        <i class="bi bi-person-video2 display-6 text-warning mb-2"></i>
+        <h6 class="fw-bold">Soporte VIP</h6>
+        <p class="display-6 text-warning fw-bold mb-0" id="counter4">0/7</p>
+      </div>
+    </div>
+  </div>
 
-        <canvas id="statsChart"></canvas>
+  <!-- Gráfico y más info -->
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-10">
+      <div class="card p-4 rounded-4 shadow animate__animated animate__fadeIn">
+        <h5 class="fw-bold">Resultados comprobados</h5>
+        <p class="text-muted">Empresas que eligen el Plan Premium han experimentado:</p>
+        <ul class="mb-4">
+          <li>📈 Automatización del 80% de sus operaciones repetitivas.</li>
+          <li>🔍 Visibilidad en tiempo real de KPIs críticos.</li>
+          <li>💼 Soporte técnico dedicado con tiempo de respuesta menor a 5 minutos.</li>
+        </ul>
+        <canvas id="premiumChart" height="120"></canvas>
       </div>
     </div>
   </div>
