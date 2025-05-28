@@ -4,10 +4,25 @@
       <div *ngFor="let plan of planes" class="col-md-6 col-lg-4 d-flex">
         <div class="card mb-4 shadow-sm w-100">
           <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-center">{{ plan.nombre | titlecase }}</h5>
-            <p class="card-text text-muted text-center">{{ plan.descripcion }}</p>
+            <h5 class="card-title text-center">
+              {{ plan.nombre | titlecase }}
+            </h5>
+            <p class="card-text text-muted text-center">
+              {{ plan.descripcion }}
+            </p>
+
             <div class="mt-auto text-center">
-              <button class=" btn btn-primary w-75" (click)="buy(plan)">Adquirir</button>
+              <div
+                *ngIf="loadingPlanName === plan.nombre"
+                class="text-center my-3"
+              >
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Cargando...</span>
+                </div>
+              </div>
+              <button class="btn btn-primary w-75" (click)="buy(plan)">
+                Adquirir
+              </button>
             </div>
           </div>
         </div>
@@ -16,8 +31,13 @@
   </div>
 </ng-container>
 
-<ng-template  #loginAlert>
-  <div  class="d-flex justify-content-center align-items-center" style="height: 50vh;">
-    <button class="btn adquirir btn-primary btn-lg" (click)="showLoginAlert()">Ver planes</button>
+<ng-template #loginAlert>
+  <div
+    class="d-flex justify-content-center align-items-center"
+    style="height: 50vh"
+  >
+    <button class="btn adquirir btn-primary btn-lg" (click)="showLoginAlert()">
+      Ver planes
+    </button>
   </div>
 </ng-template>

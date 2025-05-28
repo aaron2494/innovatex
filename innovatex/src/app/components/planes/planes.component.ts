@@ -34,7 +34,7 @@ export class PlanesComponent {
       precio: 3,
     },
   ];
-
+loadingPlanName: string | null = null;
   constructor(
     public auth: AuthService,
     private paymentService: PaymentService
@@ -65,9 +65,11 @@ export class PlanesComponent {
       Swal.fire('Error', 'No se encontró el correo del usuario.', 'error');
       return;
     }
+      this.loadingPlanName = plan.nombre;
 
     this.paymentService.createPreference(plan.nombre, userEmail).subscribe({
       next: (res) => {
+         this.loadingPlanName = null;
         if (res.init_point) {
           window.location.href = res.init_point;
         } else {
@@ -75,6 +77,7 @@ export class PlanesComponent {
         }
       },
       error: (err) => {
+       this.loadingPlanName = null; 
         console.error(err);
         Swal.fire('Error', 'No se pudo iniciar el pago.', 'error');
       },
