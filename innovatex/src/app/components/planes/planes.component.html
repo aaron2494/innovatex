@@ -7,7 +7,7 @@
             <h5 class="card-title text-center">{{ plan.nombre | titlecase }}</h5>
             <p class="card-text text-muted text-center">{{ plan.descripcion }}</p>
             <div class="mt-auto text-center">
-              <button class="btn btn-primary w-75" (click)="buy(plan)">Adquirir</button>
+              <button class=" btn btn-primary w-75" (click)="buy(plan)">Adquirir</button>
             </div>
           </div>
         </div>
@@ -18,6 +18,6 @@
 
 <ng-template  #loginAlert>
   <div  class="d-flex justify-content-center align-items-center" style="height: 50vh;">
-    <button class="btn btn-primary btn-lg" (click)="showLoginAlert()">Ver planes</button>
+    <button class="btn adquirir btn-primary btn-lg" (click)="showLoginAlert()">Ver planes</button>
   </div>
 </ng-template>
