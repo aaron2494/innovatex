@@ -7,6 +7,10 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
   },
+  {
+    path: 'error',
+    component: LayoutComponent
+  },
  {
     path: 'plan-basico',
     canActivate: [planGuard],
