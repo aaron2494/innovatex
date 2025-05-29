@@ -1,7 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {  ChartData, ChartOptions, ChartType } from 'chart.js';
+import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import {
   trigger,
@@ -10,23 +10,25 @@ import {
   transition,
   animate
 } from '@angular/animations';
+
 @Component({
   selector: 'app-dashboard',
-  imports: [NgFor,CommonModule,BaseChartDirective],
-  standalone:true,
-  animations:[
+  standalone: true,
+  imports: [CommonModule, NgFor, HttpClientModule, BaseChartDirective],
+  animations: [
     trigger('expansion', [
       state('oculto', style({
         height: '0',
         opacity: 0,
         padding: '0',
         margin: '0',
+        overflow: 'hidden'
       })),
       state('visible', style({
         height: '*',
         opacity: 1,
         padding: '*',
-        margin: '*',
+        margin: '*'
       })),
       transition('oculto <=> visible', [
         animate('500ms ease-in-out')
@@ -34,23 +36,20 @@ import {
     ])
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent  implements OnInit {
-
-  // Al inicio de tu clase
-paginaActual = 1;
-itemsPorPagina = 5;
+export class DashboardComponent implements OnInit {
+  paginaActual = 1;
+  itemsPorPagina = 5;
 
   mostrarDashboard = false;
 
-   ventas: any[] = [];
+  ventas: any[] = [];
   cargando = false;
   error = '';
   totalIngresos = 0;
 
-  // 🎯 Datos para el gráfico
- chartData: ChartData<'pie', number[], string> = {
+  chartData: ChartData<'pie', number[], string> = {
     labels: ['Básico', 'Profesional', 'Premium'],
     datasets: [{
       data: [0, 0, 0],
@@ -70,14 +69,15 @@ itemsPorPagina = 5;
   chartType: ChartType = 'pie';
 
   constructor(private http: HttpClient) {}
- ngOnInit(): void {
+
+  ngOnInit(): void {
     this.obtenerVentas();
   }
 
-   obtenerVentas() {
+  obtenerVentas() {
     this.cargando = true;
     this.error = '';
-    
+
     this.http.get<any[]>('https://backend-mp-sage.vercel.app/api/ventas').subscribe({
       next: (ventas) => {
         this.ventas = ventas.reverse();
@@ -92,11 +92,13 @@ itemsPorPagina = 5;
       }
     });
   }
-get ventasPaginadas(): any[] {
-  const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
-  const fin = inicio + this.itemsPorPagina;
-  return this.ventas.slice(inicio, fin);
-}
+
+  get ventasPaginadas(): any[] {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    return this.ventas.slice(inicio, fin);
+  }
+
   totalPaginas(): number {
     return Math.ceil(this.ventas.length / this.itemsPorPagina);
   }
@@ -110,11 +112,13 @@ get ventasPaginadas(): any[] {
       this.paginaActual = pagina;
     }
   }
-   calcularTotalIngresos() {
+
+  calcularTotalIngresos() {
     this.totalIngresos = this.ventas.reduce((total, venta) => total + venta.monto, 0);
   }
-generarDatosGrafico() {
-      const conteo: { [key: string]: number } = { Básico: 0, Profesional: 0, Premium: 0 };
+
+  generarDatosGrafico() {
+    const conteo: { [key: string]: number } = { Básico: 0, Profesional: 0, Premium: 0 };
 
     for (const venta of this.ventas) {
       conteo[venta.plan] = (conteo[venta.plan] || 0) + 1;
@@ -130,24 +134,21 @@ generarDatosGrafico() {
   }
 
   formatearFecha(fecha: string | null): string {
-  if (!fecha) return 'Fecha no disponible';
+    if (!fecha) return 'Fecha no disponible';
 
-  const fechaObj = new Date(fecha);
-  if (isNaN(fechaObj.getTime())) {
-    return 'Fecha inválida';
+    const fechaObj = new Date(fecha);
+    if (isNaN(fechaObj.getTime())) {
+      return 'Fecha inválida';
+    }
+
+    return fechaObj.toLocaleDateString('es-AR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
   }
 
-  return fechaObj.toLocaleDateString('es-AR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
-  
-}
-
-  // Función para formatear el monto
   formatearMonto(monto: number): string {
     return `$${monto.toFixed(2)} ARS`;
   }
 }
-

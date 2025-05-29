@@ -1,16 +1,23 @@
-<section class="services-section">
-  <h2>Nuestros Servicios</h2>
-  <div class="services-grid">
-    <div class="service-card" *ngFor="let s of services">
-      <div class="icon-container">
-        <mat-icon class="icon">{{ s.icon }}</mat-icon>
-      </div>
-      <div class="content">
-        <h3>{{ s.title }}</h3>
-        <p>{{ s.description }}</p>
-        <ul>
-          <li *ngFor="let detail of s.details">✔ {{ detail }}</li>
-        </ul>
+<section class="services-section py-5 bg-dark text-white">
+  <h2 class="text-center mb-5 fw-bold text-info">Nuestros Servicios</h2>
+  <div class="services-grid container">
+    <div class="row g-4">
+      <div
+        class="col-md-6 col-lg-4"
+        *ngFor="let s of services"
+      >
+        <div class="card h-100 shadow-lg border-0 rounded-4 bg-gradient bg-opacity-10 bg-secondary text-white">
+          <div class="card-body d-flex flex-column p-4">
+            <div class="icon-container mb-3 text-center">
+              <mat-icon class="icon fs-1 text-info">{{ s.icon }}</mat-icon>
+            </div>
+            <h3 class="card-title text-center text-info fw-semibold">{{ s.title }}</h3>
+            <p class="card-text text-center text-white small mb-3">{{ s.description }}</p>
+            <ul class="list-unstyled text-white-50 small ps-3">
+              <li *ngFor="let detail of s.details">✔ {{ detail }}</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -24,7 +24,7 @@ export class ServicesComponent {
     },
     {
       icon: 'memory',
-      title: 'Desarrollo de Software',
+      title: 'Desarrollo integral de Software',
       description: 'Creamos plataformas adaptadas a tus procesos para que trabajes más rápido y con mayor control.',
       details: [
         'Sistemas web y móviles',
