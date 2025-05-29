@@ -41,9 +41,7 @@ import {
 export class DashboardComponent implements OnInit {
   paginaActual = 1;
   itemsPorPagina = 5;
-
-  mostrarDashboard = false;
-
+  mostrarDashboard = true
   ventas: any[] = [];
   cargando = false;
   error = '';
@@ -78,8 +76,9 @@ export class DashboardComponent implements OnInit {
     this.cargando = true;
     this.error = '';
 
-    this.http.get<any[]>('https://backend-mp-sage.vercel.app/api/ventas').subscribe({
+    this.http.get<any[]>('https://backend-mp-49xu.onrender.com/api/ventas').subscribe({
       next: (ventas) => {
+        console.log('Ventas recibidas:', ventas); // 👈 esto
         this.ventas = ventas.reverse();
         this.calcularTotalIngresos();
         this.generarDatosGrafico();

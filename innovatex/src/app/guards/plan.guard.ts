@@ -13,7 +13,7 @@ export const planGuard: CanActivateFn = (route, state) => {
   const email = user?.email;
 
   if (!email) {
-    router.navigate(['/login']);
+    router.navigate(['']);
     return of(false);
   }
 

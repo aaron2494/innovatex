@@ -7,10 +7,11 @@ import { PlanesComponent } from "../planes/planes.component";
 
 import { TestimoniosComponent } from "../testimonios/testimonios.component";
 import { ButtomComponent } from "../buttom/buttom.component";
+import { DashboardComponent } from "../dashboard/dashboard.component";
 
 @Component({
   selector: 'app-layout',
-  imports: [NavbarComponent, FooterComponent, HeroComponent, ServicesComponent, PlanesComponent, TestimoniosComponent, ButtomComponent],
+  imports: [NavbarComponent, FooterComponent, HeroComponent, ServicesComponent, PlanesComponent, TestimoniosComponent, ButtomComponent, DashboardComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
